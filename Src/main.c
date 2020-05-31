@@ -90,7 +90,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+  HAL_Init();          //自动初始化了一个1ms的滴答计数器
 
   /* USER CODE BEGIN Init */
 
@@ -131,8 +131,12 @@ int main(void)
 }
 
 /**
-  * @brief System Clock Configuration
+  * @brief System Clock Configuration, Implementation of System Clock Tree Configuration
   * @retval None
+  * SYSCLK = 168M
+  * HCLK   = 168M
+  * PCLK1 = 42M
+  * PCLK2 = 84M
   */
 void SystemClock_Config(void)
 {
@@ -145,7 +149,7 @@ void SystemClock_Config(void)
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;            //外部晶振入口
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
@@ -161,7 +165,7 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;            //指定PLLCLK作为系统时钟源
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
@@ -219,16 +223,16 @@ static void MX_ADC1_Init(void)
   /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion) 
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;    //PCLK2 divided by 4 = 84M/4=21M
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = ENABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;        //设置规则组的触发方式 soft start
   hadc1.Init.DataAlign = ADC_DATAALIGN_LEFT;
-  hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.NbrOfConversion = 1;                          //[1~16]
+  hadc1.Init.DMAContinuousRequests = DISABLE;              // one shot  mode
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
@@ -240,9 +244,9 @@ static void MX_ADC1_Init(void)
   sConfigInjected.InjectedRank = 1;
   sConfigInjected.InjectedNbrOfConversion = 3;
   sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_15CYCLES;
-  sConfigInjected.ExternalTrigInjecConvEdge = ADC_EXTERNALTRIGINJECCONVEDGE_RISING;
-  sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T1_CC4;
-  sConfigInjected.AutoInjectedConv = DISABLE;
+  sConfigInjected.ExternalTrigInjecConvEdge = ADC_EXTERNALTRIGINJECCONVEDGE_RISING;  //指定ADC触发为外部触发 影响所有的注入组
+  sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T1_CC4;          //指定ADC触发源为T1_CC4
+  sConfigInjected.AutoInjectedConv = DISABLE;                                        //单次注入
   sConfigInjected.InjectedDiscontinuousConvMode = ENABLE;
   sConfigInjected.InjectedOffset = 0;
   if (HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected) != HAL_OK)
@@ -427,11 +431,11 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = ((TIM_CLOCK_DIVIDER) - 1);
-  htim1.Init.CounterMode = TIM_COUNTERMODE_CENTERALIGNED1;
-  htim1.Init.Period = ((PWM_PERIOD_CYCLES) / 2);
+  htim1.Init.Prescaler = ((TIM_CLOCK_DIVIDER) - 1);          
+  htim1.Init.CounterMode = TIM_COUNTERMODE_CENTERALIGNED1;   //必须要工作在中央对其模式 PWM波形周期要比实际的周期要大一倍，所有对饮的频率要增大一倍
+  htim1.Init.Period = ((PWM_PERIOD_CYCLES) / 2);             // PWM_PERIOD_CYCLES = (ADV_TIM_CLK_MHz*1000000/PWM_FREQUENCY) [ADV_TIM_CLK_MHz=168M,PWM_FREQUENCY=16000]
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV2;
-  htim1.Init.RepetitionCounter = (REP_COUNTER);
+  htim1.Init.RepetitionCounter = (REP_COUNTER);              //中央对齐模式，启动计数器之前初始化RCR, 只会在下溢时产生溢出更新事件
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
   {
@@ -472,7 +476,7 @@ static void MX_TIM1_Init(void)
   {
     Error_Handler();
   }
-  sConfigOC.OCMode = TIM_OCMODE_PWM2;
+  sConfigOC.OCMode = TIM_OCMODE_PWM2;            //中央对齐模式，PWM MODE2 启动前初始化RCR 只会产生下溢中断  下溢触发 ADC 
   sConfigOC.Pulse = (((PWM_PERIOD_CYCLES) / 2) - (HTMIN));
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
   {
