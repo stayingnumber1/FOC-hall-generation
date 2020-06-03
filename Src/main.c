@@ -43,7 +43,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-ADC_HandleTypeDef hadc1;
+ADC_HandleTypeDef hadc1;      //硬件抽象为结构体
 ADC_HandleTypeDef hadc2;
 
 DAC_HandleTypeDef hdac;

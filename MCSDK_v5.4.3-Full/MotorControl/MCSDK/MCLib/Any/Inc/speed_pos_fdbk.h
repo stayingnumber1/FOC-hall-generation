@@ -75,7 +75,7 @@ typedef struct
   uint16_t hMinReliableMecSpeedUnit; /*!< Minimum value of measured mechanical speed that is
                                         considered to be valid. Expressed
                                         in the unit defined by #SPEED_UNIT.*/
-  uint16_t hMaxReliableMecAccelUnitP; /*!< Maximum  valueof measured acceleration
+  uint16_t hMaxReliableMecAccelUnitP; /*!< Maximum value of measured acceleration
                                         that is considered to be valid. Expressed in
                                         the unit defined by #SPEED_UNIT */
   uint16_t hMeasurementFrequency;  /*!< Frequency at which the user will request

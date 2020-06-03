@@ -73,7 +73,7 @@ __weak void ICS_Init( PWMC_ICS_Handle_t * pHandle )
     /* BKIN, if enabled */
     if ( ( pHandle->pParams_str->EmergencyStop ) != DISABLE )
     {
-      LL_TIM_ClearFlag_BRK( TIMx );
+      LL_TIM_ClearFlagBR_K( TIMx );
       LL_TIM_EnableIT_BRK( TIMx );
     }
 
@@ -107,8 +107,8 @@ __weak void ICS_Init( PWMC_ICS_Handle_t * pHandle )
     if ( pHandle->pParams_str->TIMx == TIM1 )
     {
       /* TIM1 Counter Clock stopped when the core is halted */
-      LL_DBGMCU_APB2_GRP1_FreezePeriph( LL_DBGMCU_APB2_GRP1_TIM1_STOP );
-      pHandle->ADCTriggerSet = LL_ADC_INJ_TRIG_EXT_TIM1_CH4;
+      LL_DBGMCU_APB2_GRP1_FreezePeriph( LL_DBGMCU_APB2_GRP1_TIM1_STOP );   //关闭APB2总线外设 TIM1 和TIM8在APB2总线上
+      pHandle->ADCTriggerSet = LL_ADC_INJ_TRIG_EXT_TIM1_CH4;               //上升沿触发
     }
     else
     {
@@ -123,7 +123,7 @@ __weak void ICS_Init( PWMC_ICS_Handle_t * pHandle )
     LL_ADC_Enable( ADC2 );
 
     /* reset regular conversion sequencer length set by cubeMX */
-    LL_ADC_REG_SetSequencerLength( ADC1, LL_ADC_REG_SEQ_SCAN_DISABLE );
+    LL_ADC_REG_SetSequencerLength( ADC1, LL_ADC_REG_SEQ_SCAN_DISABLE );  //深度1 只有一个通道
 
     /* ADC1 Injected conversions end interrupt enabling */
     LL_ADC_ClearFlag_JEOS( ADC1 );

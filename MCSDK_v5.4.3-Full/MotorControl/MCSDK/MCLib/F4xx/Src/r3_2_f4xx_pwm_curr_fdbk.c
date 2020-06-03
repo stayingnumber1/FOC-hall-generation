@@ -87,7 +87,7 @@ __weak void R3_2_Init( PWMC_R3_2_Handle_t * pHandle )
 
   /* Prepare timer for synchronization */
   LL_TIM_GenerateEvent_UPDATE(TIMx);
-  if ( pHandle->pParams_str->bFreqRatio == 2u )
+  if ( pHandle->pParams_str->bFreqRatio == 2u )                 //两个电机PWM频率的比值
   {
     if ( pHandle->pParams_str->bIsHigherFreqTim == HIGHER_FREQ )
     {
@@ -115,13 +115,13 @@ __weak void R3_2_Init( PWMC_R3_2_Handle_t * pHandle )
   {
     /* TIM1 Counter Clock stopped when the core is halted */
     LL_DBGMCU_APB2_GRP1_FreezePeriph(LL_DBGMCU_APB2_GRP1_TIM1_STOP);
-    pHandle->ADC_ExternalTriggerInjected = LL_ADC_INJ_TRIG_EXT_TIM1_CH4;
+    pHandle->ADC_ExternalTriggerInjected = LL_ADC_INJ_TRIG_EXT_TIM1_CH4;  //上升沿触发 
   }
   else
   {
     /* TIM8 Counter Clock stopped when the core is halted */
     LL_DBGMCU_APB2_GRP1_FreezePeriph(LL_DBGMCU_APB2_GRP1_TIM8_STOP);
-    pHandle->ADC_ExternalTriggerInjected = LL_ADC_INJ_TRIG_EXT_TIM8_CH4;
+    pHandle->ADC_ExternalTriggerInjected = LL_ADC_INJ_TRIG_EXT_TIM8_CH4;  
   }
 
   /* ADCs registers configuration ---------------------------------*/

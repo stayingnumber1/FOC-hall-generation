@@ -38,7 +38,11 @@
    Transformation of real currents (A) into int16_t format must be done accordingly with
    formula:
    Phase current (int16_t 0-to-peak) = (Phase current (A 0-to-peak)* 32767 * Rshunt *
-                                   *Amplifying network gain)/(MCU supply voltage/2)
+                                   * nAmplifyingnetwork gain)/(MCU supply voltage/2)
+   Phase current = (Phase current *65535*Rshunt*nAmplifyingnetwork/(MCU supply valtage))
+   电压和电流使用1s16的表达方式:电压和电流都缩放了32768倍
+   1s16A=Imax/32768
+   1s16V=Vmax/32768
 */
 
 #define NOMINAL_CURRENT         3276

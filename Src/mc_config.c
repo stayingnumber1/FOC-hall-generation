@@ -107,9 +107,9 @@ PID_Handle_t PIDIdHandle_M1 =
   */
 SpeednTorqCtrl_Handle_t SpeednTorqCtrlM1 =
 {
-  .STCFrequencyHz =           		MEDIUM_FREQUENCY_TASK_RATE, 	 
+  .STCFrequencyHz =           		MEDIUM_FREQUENCY_TASK_RATE, 	          //速度环 1KHz
   .MaxAppPositiveMecSpeedUnit =	(uint16_t)(MAX_APPLICATION_SPEED_UNIT), 
-  .MinAppPositiveMecSpeedUnit =	(uint16_t)(MIN_APPLICATION_SPEED_UNIT), 
+  .MinAppPositiveMecSpeedUnit =	(uint16_t)(MIN_APPLICATION_SPEED_UNIT),   //Hz 放大10倍表示而实际为0.1Hz= 0.1r/s(电机转速单位)  
   .MaxAppNegativeMecSpeedUnit =	(int16_t)(-MIN_APPLICATION_SPEED_UNIT), 
   .MinAppNegativeMecSpeedUnit =	(int16_t)(-MAX_APPLICATION_SPEED_UNIT),
   .MaxPositiveTorque =				(int16_t)NOMINAL_CURRENT,		 
@@ -170,18 +170,18 @@ HALL_Handle_t HALL_M1 =
   ._Super = {
     .bElToMecRatio                     =	POLE_PAIR_NUM,               
     .hMaxReliableMecSpeedUnit          =	(uint16_t)(1.15*MAX_APPLICATION_SPEED_UNIT),
-    .hMinReliableMecSpeedUnit          =	(uint16_t)(MIN_APPLICATION_SPEED_UNIT),
-    .bMaximumSpeedErrorsNumber         =	MEAS_ERRORS_BEFORE_FAULTS,            
-    .hMaxReliableMecAccelUnitP         =	65535,                             
-    .hMeasurementFrequency             =	TF_REGULATION_RATE_SCALED,
-    .DPPConvFactor                     =  DPP_CONV_FACTOR,       
+    .hMinReliableMecSpeedUnit          =	(uint16_t)(MIN_APPLICATION_SPEED_UNIT),      //最低速度 0 rpm/s
+    .bMaximumSpeedErrorsNumber         =	MEAS_ERRORS_BEFORE_FAULTS,                   //速度测量错误数
+    .hMaxReliableMecAccelUnitP         =	65535,                                       //能够测量的最大加速度
+    .hMeasurementFrequency             =	TF_REGULATION_RATE_SCALED,                   //一个周期内完成一次电流采样
+    .DPPConvFactor                     =  DPP_CONV_FACTOR,                             //使用DPP的方式计算角度
   }, 
   .SensorPlacement     = HALL_SENSORS_PLACEMENT,
   .PhaseShift          = (int16_t)(HALL_PHASE_SHIFT * 65536/360),
-  .SpeedSamplingFreqHz = MEDIUM_FREQUENCY_TASK_RATE,
-  .SpeedBufferSize     = HALL_AVERAGING_FIFO_DEPTH, 
- .TIMClockFreq       = HALL_TIM_CLK,         
- .TIMx                = TIM3, 
+  .SpeedSamplingFreqHz = MEDIUM_FREQUENCY_TASK_RATE,                                   //速度采样频率1KHz
+  .SpeedBufferSize     = HALL_AVERAGING_FIFO_DEPTH,                                    //FIFO深度 6
+ .TIMClockFreq       = HALL_TIM_CLK,                                                   //霍尔编码器使用定时器时钟频率84MHz  
+ .TIMx                = TIM3,                                                          //TIM3位于APB1总线上 APB1总线时钟频率 84MHz
  
  .ICx_Filter          = M1_HALL_IC_FILTER,
  

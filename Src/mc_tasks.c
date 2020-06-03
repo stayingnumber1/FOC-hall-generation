@@ -132,13 +132,13 @@ __weak void MCboot( MCI_Handle_t* pMCIList[NBR_OF_MOTORS],MCT_Handle_t* pMCTList
   STM_Init(&STM[M1]);
   
   bMCBootCompleted = 0;
-  pCLM[M1] = &CircleLimitationM1;
+  pCLM[M1] = &CircleLimitationM1;      //转速限制
 
   /**********************************************************/
   /*    PWM and current sensing component initialization    */
   /**********************************************************/
   pwmcHandle[M1] = &PWM_Handle_M1._Super;
-  R3_2_Init(&PWM_Handle_M1);
+  R3_2_Init(&PWM_Handle_M1);           //三电阻采样初始化
   /* USER CODE BEGIN MCboot 1 */
 
   /* USER CODE END MCboot 1 */
@@ -157,8 +157,8 @@ __weak void MCboot( MCI_Handle_t* pMCIList[NBR_OF_MOTORS],MCT_Handle_t* pMCTList
   /******************************************************/
   /*   Main speed sensor component initialization       */
   /******************************************************/
-  pSTC[M1] = &SpeednTorqCtrlM1;
-  HALL_Init (&HALL_M1);
+  pSTC[M1] = &SpeednTorqCtrlM1;                            //速度控制模式并设置目标速度
+  HALL_Init (&HALL_M1);                                    //初始化霍尔传感器软件资源
   
 
   /******************************************************/

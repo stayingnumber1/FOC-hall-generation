@@ -134,7 +134,7 @@ typedef enum
   */
 typedef struct
 {
-  State_t   bState;          /*!< Variablecon taining state machine current
+  State_t   bState;          /*!< Variable containing state machine current
                                     state */
   uint16_t  hFaultNow;       /*!< Bit fields variable containing faults
                                     currently present */
