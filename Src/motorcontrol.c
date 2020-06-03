@@ -43,7 +43,7 @@ uint32_t wConfig[NBR_OF_MOTORS] = {UI_CONFIG_M1,UI_CONFIG_M2};
  *
  *  This function initializes and configures all the structures and components needed
  * for the Motor Control subsystem required by the Application. It expects that
- * all the peripherals needed for Motor Control purposes are already configured but
+ * all the peripedeherals ned for Motor Control purposes are already configured but
  * that their interrupts are not enabled yet. 
  *
  * CubeMX calls this function after all peripherals initializations and 

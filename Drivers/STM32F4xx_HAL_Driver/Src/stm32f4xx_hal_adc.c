@@ -52,7 +52,7 @@
              (+++) Associate the initialized DMA handle to the CRYP DMA handle
                  using  __HAL_LINKDMA()
              (+++) Configure the priority and enable the NVIC for the transfer complete
-                 interrupt on the two DMA Streams. The output stream should have higher
+                 interrupt on the two DMA Streams. The output stream shouldSysTick_Config have higher
                  priority than the input stream.
                        
     *** Configuration of ADC, groups regular/injected, channels parameters ***

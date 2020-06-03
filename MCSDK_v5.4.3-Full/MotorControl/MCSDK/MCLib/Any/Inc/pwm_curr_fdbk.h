@@ -134,7 +134,7 @@ typedef uint16_t ( *PWMC_OverCurr_Cb_t )( PWMC_Handle_t * pHandle );
 typedef uint16_t ( *PWMC_RLDetectSetDuty_Cb_t )( PWMC_Handle_t * pHandle, uint16_t hDuty );
 
 /**
-  * @brief This structure is used to handle the data of an instance of the PWM & Current Feedback component
+  * @brief This structure is used to hantdle the data of an instance of the PWM & Current Feedback componen
   *
   */
 struct PWMC_Handle
