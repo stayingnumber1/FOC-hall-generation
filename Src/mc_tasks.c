@@ -132,13 +132,13 @@ __weak void MCboot( MCI_Handle_t* pMCIList[NBR_OF_MOTORS],MCT_Handle_t* pMCTList
   STM_Init(&STM[M1]);
   
   bMCBootCompleted = 0;
-  pCLM[M1] = &CircleLimitationM1;      //转速限制
+  pCLM[M1] = &CircleLimitationM1;          //转速限制
 
   /**********************************************************/
   /*    PWM and current sensing component initialization    */
   /**********************************************************/
   pwmcHandle[M1] = &PWM_Handle_M1._Super;
-  R3_2_Init(&PWM_Handle_M1);           //三电阻采样初始化
+  R3_2_Init(&PWM_Handle_M1);               //三电阻采样初始化
   /* USER CODE BEGIN MCboot 1 */
 
   /* USER CODE END MCboot 1 */
@@ -157,8 +157,8 @@ __weak void MCboot( MCI_Handle_t* pMCIList[NBR_OF_MOTORS],MCT_Handle_t* pMCTList
   /******************************************************/
   /*   Main speed sensor component initialization       */
   /******************************************************/
-  pSTC[M1] = &SpeednTorqCtrlM1;                            //速度控制模式并设置目标速度
-  HALL_Init (&HALL_M1);                                    //初始化霍尔传感器软件资源
+  pSTC[M1] = &SpeednTorqCtrlM1; //速度控制模式并设置目标速度
+  HALL_Init (&HALL_M1);         //初始化霍尔传感器软件资源
   
 
   /******************************************************/
@@ -206,10 +206,11 @@ __weak void MCboot( MCI_Handle_t* pMCIList[NBR_OF_MOTORS],MCT_Handle_t* pMCTList
   MCI_ExecSpeedRamp(oMCInterface[M1],
   STC_GetMecSpeedRefUnitDefault(pSTC[M1]),0); /*First command to STC*/
   pMCIList[M1] = oMCInterface[M1];
+
   MCT[M1].pPIDSpeed = pPIDSpeed[M1];
   MCT[M1].pPIDIq = pPIDIq[M1];
   MCT[M1].pPIDId = pPIDId[M1];
-  MCT[M1].pPIDFluxWeakening = MC_NULL; /* if M1 doesn't has FW */
+  MCT[M1].pPIDFluxWeakening = MC_NULL;      /* if M1 doesn't has FW */
   MCT[M1].pPWMnCurrFdbk = pwmcHandle[M1];
   MCT[M1].pRevupCtrl = MC_NULL;              /* only if M1 is not sensorless*/
   MCT[M1].pSpeedSensorMain = (SpeednPosFdbk_Handle_t *) &HALL_M1; 
@@ -745,10 +746,8 @@ __weak void TSK_SafetyTask_PWMOFF(uint8_t bMotor)
 }
 
 /**
-  * @brief  This function returns the reference of the MCInterface relative to
-  *         the selected drive.
-  * @param  bMotor Motor reference number defined
-  *         \link Motors_reference_number here \endlink
+  * @brief  This function returns the reference of the MCInterface relative to the selected drive.
+  * @param  bMotor Motor reference number defined  Motors_reference_number here
   * @retval MCI_Handle_t * Reference to MCInterface relative to the selected drive.
   *         Note: it can be MC_NULL if MCInterface of selected drive is not
   *         allocated.

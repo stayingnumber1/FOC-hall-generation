@@ -359,8 +359,7 @@ __weak int16_t STC_CalcTorqueReference( SpeednTorqCtrl_Handle_t * pHandle )
 }
 
 /**
-  * @brief  Get the Default mechanical rotor speed reference expressed in tenths
-  *         of HZ.
+  * @brief  Get the Default mechanical rotor speed reference expressed in tenths of HZ.
   * @param  pHandle: handler of the current instance of the SpeednTorqCtrl component
   * @retval int16_t It returns the Default mechanical rotor speed. reference
   *         expressed in tenths of HZ.

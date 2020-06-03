@@ -63,21 +63,17 @@ typedef enum
 
 typedef struct
 {
-  STM_Handle_t * pSTM; /*!< State machine object used by MCI.*/
+  STM_Handle_t * pSTM;            /*!< State machine object used by MCI.*/
   SpeednTorqCtrl_Handle_t * pSTC; /*!< Speed and torque controller object used by MCI.*/
-  pFOCVars_t pFOCVars;    /*!< Pointer to FOC vars used by MCI.*/
+  pFOCVars_t pFOCVars;            /*!< Pointer to FOC vars used by MCI.*/
   MCI_UserCommands_t lastCommand; /*!< Last command coming from the user.*/
-  int16_t hFinalSpeed;        /*!< Final speed of last ExecSpeedRamp command.*/
-  int16_t hFinalTorque;       /*!< Final torque of last ExecTorqueRamp
-                                   command.*/
-  qd_t Iqdref;     /*!< Current component of last
-                                   SetCurrentReferences command.*/
-  uint16_t hDurationms;       /*!< Duration in ms of last ExecSpeedRamp or
-                                   ExecTorqueRamp command.*/
+  int16_t hFinalSpeed;            /*!< Final speed of last ExecSpeedRamp command.*/
+  int16_t hFinalTorque;           /*!< Final torque of last ExecTorqueRamp command.*/
+  qd_t Iqdref;                    /*!< Current component of last SetCurrentReferences command.*/
+  uint16_t hDurationms;           /*!< Duration in ms of last ExecSpeedRamp or ExecTorqueRamp command.*/
   
-  MCI_CommandState_t CommandState; /*!< The status of the buffered command.*/
-  STC_Modality_t LastModalitySetByUser; /*!< The last STC_Modality_t set by the
-                                             user. */
+  MCI_CommandState_t CommandState;      /*!< The status of the buffered command.*/
+  STC_Modality_t LastModalitySetByUser; /*!< The last STC_Modality_t set by the user. */
 } MCI_Handle_t;
 
 /* Exported functions ------------------------------------------------------- */

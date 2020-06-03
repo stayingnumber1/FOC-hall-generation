@@ -47,14 +47,14 @@ extern "C" {
   */
 typedef struct
 {
-  STC_Modality_t Mode;   /*!< Modality of STC. It can be one of these two settings: STC_TORQUE_MODE to enable the Torque mode or STC_SPEED_MODE to enable the Speed mode.*/
+  STC_Modality_t Mode;   /*!< Modality of STC. It can be one of these two  settings: STC_TORQUE_MODE to enable the Torque mode or STC_SPEED_MODE to enable the Speed mode.*/
   int16_t TargetFinal;        /*!< Backup of hTargetFinal to be applied in the  last step.*/
   int32_t SpeedRefUnitExt;    /*!< Current mechanical rotor speed reference expressed in tenths of HZ multiplied by 65536.*/
   int32_t TorqueRef;          /*!< Current motor torque reference. This value represents actually the Iq current  expressed in digit multiplied by 65536.*/
   uint32_t RampRemainingStep; /*!< Number of steps remaining to complete the ramp.*/
   PID_Handle_t * PISpeed;     /*!< The regulator used to perform the speed control loop.*/
   SpeednPosFdbk_Handle_t * SPD;   /*!< The speed sensor used to perform the speed  regulation.*/
-  int32_t IncDecAmount;           /*!< Increment/decrement amount to be applied to the reference value at each CalcTorqueReference.*/
+  int32_t IncDecAmount;           /*!< Increment/decrement amount to be applied to the reference value at each CalcTorque Reference.*/
 
   uint16_t STCFrequencyHz;             /*!< Frequency on which the user updates the torque reference calling STC_CalcTorqueReference method expressed in Hz */
   uint16_t MaxAppPositiveMecSpeedUnit; /*!< Application maximum positive value of the rotor mechanical speed. Expressed in the unit defined by #SPEED_UNIT.*/
