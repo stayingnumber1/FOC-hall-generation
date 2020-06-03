@@ -141,28 +141,17 @@ struct PWMC_Handle
 {
   /** @{ */
   PWMC_IrqHandler_Cb_t pFctIrqHandler;                   /**< pointer on the interrupt handling function. */
-  PWMC_GetPhaseCurr_Cb_t
-  pFctGetPhaseCurrents;           /**< pointer on the function the component instance uses to retrieve pahse currents */
-  PWMC_Generic_Cb_t
-  pFctSwitchOffPwm;                    /**< pointer on the function the component instance uses to switch PWM off */
-  PWMC_Generic_Cb_t
-  pFctSwitchOnPwm;                     /**< pointer on the function the component instance uses to switch PWM on */
-  PWMC_Generic_Cb_t
-  pFctCurrReadingCalib;                /**< pointer on the function the component instance uses to calibrate the current reading ADC(s) */
-  PWMC_Generic_Cb_t
-  pFctTurnOnLowSides;                  /**< pointer on the function the component instance uses to turn low sides on */
-  PWMC_SetSampPointSectX_Cb_t
-  pFctSetADCSampPointSectX;  /**< pointer on the function the component instance uses to set the ADC sampling point  */
-  PWMC_OverCurr_Cb_t
-  pFctIsOverCurrentOccurred;          /**< pointer on the function the component instance uses to return the over current status */
-  PWMC_SetOcpRefVolt_Cb_t
-  pFctOCPSetReferenceVoltage;    /**< pointer on the function the component instance uses to set the over current reference voltage */
-  PWMC_Generic_Cb_t
-  pFctRLDetectionModeEnable;           /**< pointer on the function the component instance uses to enable RL detection mode */
-  PWMC_Generic_Cb_t
-  pFctRLDetectionModeDisable;          /**< pointer on the function the component instance uses to disable RL detection mode */
-  PWMC_RLDetectSetDuty_Cb_t
-  pFctRLDetectionModeSetDuty;  /**< pointer on the function the component instance uses to set the PWM duty cycle in RL detection mode */
+  PWMC_GetPhaseCurr_Cb_t pFctGetPhaseCurrents;           /**< pointer on the function the component instance uses to retrieve pahse currents */
+  PWMC_Generic_Cb_t pFctSwitchOffPwm;                    /**< pointer on the function the component instance uses to switch PWM off */
+  PWMC_Generic_Cb_t pFctSwitchOnPwm;                     /**< pointer on the function the component instance uses to switch PWM on */
+  PWMC_Generic_Cb_t pFctCurrReadingCalib;                /**< pointer on the function the component instance uses to calibrate the current reading ADC(s) */
+  PWMC_Generic_Cb_t pFctTurnOnLowSides;                  /**< pointer on the function the component instance uses to turn low sides on */
+  PWMC_SetSampPointSectX_Cb_t pFctSetADCSampPointSectX;  /**< pointer on the function the component instance uses to set the ADC sampling point  */
+  PWMC_OverCurr_Cb_t pFctIsOverCurrentOccurred;          /**< pointer on the function the component instance uses to return the over current status */
+  PWMC_SetOcpRefVolt_Cb_t pFctOCPSetReferenceVoltage;    /**< pointer on the function the component instance uses to set the over current reference voltage */
+  PWMC_Generic_Cb_t pFctRLDetectionModeEnable;           /**< pointer on the function the component instance uses to enable RL detection mode */
+  PWMC_Generic_Cb_t pFctRLDetectionModeDisable;          /**< pointer on the function the component instance uses to disable RL detection mode */
+  PWMC_RLDetectSetDuty_Cb_t pFctRLDetectionModeSetDuty;  /**< pointer on the function the component instance uses to set the PWM duty cycle in RL detection mode */
   /** @} */
   uint16_t  hT_Sqrt3;                                    /**< a constant utilized by PWM algorithm (@f$\sqrt{3}@f$) */
   uint16_t  CntPhA;                                     /**< PWM Duty cycle for phase A */
