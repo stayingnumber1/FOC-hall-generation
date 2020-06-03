@@ -48,16 +48,11 @@ extern "C" {
 typedef struct
 {
   uint32_t FrequencyHz;             /*!< Execution frequency expressed in Hz */
-  int32_t  TargetFinal;             /*!< Backup of hTargetFinal to be applied in the
-                                         last step.*/
+  int32_t  TargetFinal;             /*!< Backup of hTargetFinal to be applied in the last step.*/
   int32_t  Ext;                     /*!< Current state variable multiplied by 32768.*/
-  uint32_t RampRemainingStep;       /*!< Number of steps remaining to complete the
-                                         ramp.*/
-  int32_t  IncDecAmount;            /*!< Increment/decrement amount to be applied to
-                                         the reference value at each
-                                         CalcTorqueReference.*/
-  uint32_t ScalingFactor;           /*!< Scaling factor between output value and
-                                         its internal representation.*/
+  uint32_t RampRemainingStep;       /*!< Number of steps remaining to complete the ramp.*/
+  int32_t  IncDecAmount;            /*!< Increment/decrement amount to be applied to the reference value at each CalcTorqueReference.*/
+  uint32_t ScalingFactor;           /*!< Scaling factor between output value and its internal representation.*/
 #ifdef FASTDIV
   /* (Fast division optimization for cortex-M0 micros)*/
   FastDiv_Handle_t fd;                       /*!< Fast division obj.*/
