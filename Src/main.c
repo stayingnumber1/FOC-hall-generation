@@ -124,7 +124,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    //提交代码测试
 
     /* USER CODE BEGIN 3 */
   }
