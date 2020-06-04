@@ -69,7 +69,7 @@
 #define POSITIVE          (int8_t)1
 
 /* With digit-per-PWM unit (here 2*PI rad = 0xFFFF): */
-#define HALL_MAX_PSEUDO_SPEED        ((int16_t)0x7FFF)
+#define HALL_MAX_PSEUDO_SPEED        ((int16_t)0x7FFF)   //s16degree [32767~-32767]
 
 #define CCER_CC1E_Set               ((uint16_t)0x0001)
 #define CCER_CC1E_Reset             ((uint16_t)0xFFFE)
@@ -266,7 +266,7 @@ __weak int16_t HALL_CalcElAngle( HALL_Handle_t * pHandle )
   *         Then compute rotor average el speed (express in dpp considering the
   *         measurement frequency) based on the buffer filled by IRQ, then - as
   *         a consequence - compute, store and return - through parameter
-  *         hMecSpeedUnit - the rotor average mech speed, expressed in Unit.
+  *         hMecSpeedUnit - the rotor  averagemech speed, expressed in Unit.
   *         Then check, store and return the reliability state of
   *         the sensor; in this function the reliability is measured with
   *         reference to specific parameters of the derived
@@ -277,6 +277,11 @@ __weak int16_t HALL_CalcElAngle( HALL_Handle_t * pHandle )
   * @retval true = sensor information is reliable
   *         false = sensor information is not reliable
   */
+
+ /*
+ dpp: 1ddp = 1/Tfoc*s16degree/s=2*pi/65535*Ffoc rad/s
+ FOC一个周期内电机转过的弧度值
+ */
 __weak bool HALL_CalcAvrgMecSpeedUnit( HALL_Handle_t * pHandle, int16_t * hMecSpeedUnit )
 {
   TIM_TypeDef * TIMx = pHandle->TIMx;
@@ -288,8 +293,7 @@ __weak bool HALL_CalcAvrgMecSpeedUnit( HALL_Handle_t * pHandle, int16_t * hMecSp
 
   if ( pHandle->SensorIsReliable )
   {
-    /* No errors have been detected during rotor speed information
-    extrapolation */
+    /* No errors have been detected during rotor speed information extrapolation */
     if ( LL_TIM_GetPrescaler ( TIMx ) >= pHandle->HALLMaxRatio )
     {
       /* At start-up or very low freq */
@@ -310,23 +314,19 @@ __weak bool HALL_CalcAvrgMecSpeedUnit( HALL_Handle_t * pHandle, int16_t * hMecSp
         /* Check if speed is not to fast */
         if ( SpeedMeasAux != HALL_MAX_PSEUDO_SPEED )
         {
-          if (pHandle->HallMtpa == true)
+          if (pHandle->HallMtpa == true)   //如果达到MTPA目标角度，则不补偿
           {
             pHandle->CompSpeed = 0;
           }
           else  
           {
-            pHandle->TargetElAngle = pHandle->MeasuredElAngle;
+            pHandle->TargetElAngle = pHandle->MeasuredElAngle;    //霍尔传感器转子测量角度
             pHandle->DeltaAngle = pHandle->MeasuredElAngle - pHandle->_Super.hElAngle;
-            pHandle->CompSpeed = ( int16_t )
-            ( ( int32_t )( pHandle->DeltaAngle ) /
-              ( int32_t )( pHandle->PWMNbrPSamplingFreq ) );
+            pHandle->CompSpeed = ( int16_t )( ( int32_t )( pHandle->DeltaAngle ) /( int32_t )( pHandle->PWMNbrPSamplingFreq ) );
           }
           int32_t ElSpeedDpp = HALL_CalcAvrgElSpeedDpp( pHandle );
           /* Convert el_dpp to MecUnit */
-          *hMecSpeedUnit = ( int16_t )( ( ElSpeedDpp * 
-                                        ( int32_t )pHandle->_Super.hMeasurementFrequency * (int32_t) SPEED_UNIT ) /
-                                        (( int32_t ) pHandle->_Super.DPPConvFactor * ( int32_t )pHandle->_Super.bElToMecRatio ) );
+          *hMecSpeedUnit = ( int16_t )( ( ElSpeedDpp *  ( int32_t )pHandle->_Super.hMeasurementFrequency * (int32_t) SPEED_UNIT ) / (( int32_t ) pHandle->_Super.DPPConvFactor * ( int32_t )pHandle->_Super.bElToMecRatio ) );
         }
         else
         {

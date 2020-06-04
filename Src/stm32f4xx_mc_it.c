@@ -280,7 +280,9 @@ void HardFault_Handler(void)
  /* USER CODE END HardFault_IRQn 1 */
 
 }
-
+/*
+500us中频任务，电机控制都在这个任务里
+*/
 void SysTick_Handler(void)
 {
 

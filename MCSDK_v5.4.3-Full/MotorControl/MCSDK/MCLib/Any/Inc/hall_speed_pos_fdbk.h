@@ -203,8 +203,7 @@ typedef struct
 
   uint16_t OvfFreq;   /*!< Frequency of timer overflow (from 0 to 0x10000)
                              it will be: hOvfFreq = CKTIM /65536.*/
-  uint16_t PWMNbrPSamplingFreq; /*!< Number of current control periods inside
-                             each speed control periods it will be:
+  uint16_t PWMNbrPSamplingFreq; /*!< Number of current control periods inside each speed control periods it will be:
                              (hMeasurementFrequency / hSpeedSamplingFreqHz) - 1.*/
   uint8_t PWMFreqScaling; /*!< Scaling factor to allow to store a PWMFrequency greater than 16 bits */
   

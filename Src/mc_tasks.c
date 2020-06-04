@@ -251,7 +251,7 @@ __weak void MCboot( MCI_Handle_t* pMCIList[NBR_OF_MOTORS],MCT_Handle_t* pMCTList
  *
  * - Medium Frequency Tasks of each motors
  * - Safety Task
- * - Power Factor Correction Task (if enabled)
+ * - Power Factor Correction Task (if enabled) 
  * - User Interface task. 
  */
 __weak void MC_RunMotorControlTasks(void)
@@ -594,6 +594,14 @@ __attribute__((section (".ccmram")))
   *
   * @retval Number of the  motor instance which FOC loop was executed.
   */
+
+/*
+FOC 高频任务F=16KHz 执行FOC核心算法
+1、FOC坐标变换
+2、SVPWM的执行
+3、TIM1的PWM占空比输出调整
+*/
+
 __weak uint8_t TSK_HighFrequencyTask(void)
 {
   /* USER CODE BEGIN HighFrequencyTask 0 */
